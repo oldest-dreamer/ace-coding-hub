@@ -1,0 +1,232 @@
+@import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
+
+@layer base {
+  :root {
+    --font-display: 'Plus Jakarta Sans', 'Noto Sans Bengali', system-ui, sans-serif;
+    --font-sans: 'DM Sans', 'Noto Sans Bengali', system-ui, sans-serif;
+    --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, monospace;
+
+    /* Daylight Eye-Comfort Paper Mode Synced with Emerald Accents */
+    --surface-canvas: #F6F1E3;
+    --surface-elevated: #FCF9F2;
+    --surface-subtle: #EFE8D6;
+    --border-hairline: #E2D9C5;
+    --ink-primary: #1C1917;
+    --ink-secondary: #57534E;
+    --accent-primary: #059669;
+    --accent-secondary: #D97706;
+  }
+
+  .dark {
+    /* Obsidian & Electric Emerald Color Grading */
+    --surface-canvas: #07090D;
+    --surface-elevated: #0E131D;
+    --surface-subtle: #141B29;
+    --border-hairline: rgba(255, 255, 255, 0.08);
+    --ink-primary: #F1F5F9;
+    --ink-secondary: #94A3B8;
+    --accent-primary: #10B981;
+    --accent-secondary: #06B6D4;
+  }
+
+  html {
+    font-family: var(--font-sans);
+  }
+
+  h1, h2, h3, h4, .font-display {
+    font-family: var(--font-display);
+  }
+
+  code, pre, textarea.font-mono, .font-mono {
+    font-family: var(--font-mono);
+  }
+}
+
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+}
+
+.bangla-text {
+  font-family: 'Noto Sans Bengali', 'DM Sans', system-ui, sans-serif;
+  line-height: 1.75;
+}
+
+/* Elevated Glass Surface + Subtle Top-Edge Specular Highlight */
+.obsidian-glass-card {
+  position: relative;
+  background-color: rgba(252, 249, 242, 0.92);
+  border: 1px solid #E2D9C5;
+  box-shadow: 0 8px 28px -12px rgba(28, 25, 23, 0.12);
+  backdrop-filter: blur(20px);
+}
+
+.obsidian-glass-card::before {
+  content: "";
+  position: absolute;
+  inset-inline: 12px;
+  top: 0;
+  height: 1px;
+  pointer-events: none;
+  background: linear-gradient(90deg, transparent, rgba(16, 185, 129, 0.35), transparent);
+}
+
+.dark .obsidian-glass-card {
+  background-color: rgba(14, 19, 29, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.45);
+}
+
+.dark .obsidian-glass-card::before {
+  background: linear-gradient(90deg, transparent, rgba(52, 211, 153, 0.25), transparent);
+}
+
+/* Obsidian #07090D Canvas + Radial Emerald / Cyan / Violet Ambient Glows */
+.neon-obsidian-backdrop {
+  background-color: #07090D;
+  background-image:
+    radial-gradient(ellipse 72% 52% at 14% 0%, rgba(16, 185, 129, 0.12), transparent 65%),
+    radial-gradient(ellipse 60% 48% at 86% 6%, rgba(6, 182, 212, 0.08), transparent 65%),
+    radial-gradient(ellipse 56% 44% at 50% 100%, rgba(139, 92, 246, 0.08), transparent 70%);
+}
+
+.neon-perspective-grid {
+  background-image:
+    linear-gradient(to right, rgba(16, 185, 129, 0.07) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(6, 182, 212, 0.065) 1px, transparent 1px);
+  background-size: 48px 48px;
+  mask-image: radial-gradient(ellipse 90% 80% at 50% 25%, black 35%, transparent 100%);
+  transform: perspective(900px) rotateX(18deg) scale(1.16);
+  transform-origin: top center;
+}
+
+.neon-pulse-scanline {
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(16, 185, 129, 0.32) 50%,
+    transparent 100%
+  );
+  animation: pulse-sweep 11s ease-in-out infinite;
+}
+
+/* Warm Daylight Paper Mode Synced with Emerald & Sunlight Gradients */
+.daylight-paper-backdrop {
+  background-color: #F6F1E3;
+  background-image:
+    radial-gradient(ellipse 68% 48% at 15% 0%, rgba(16, 185, 129, 0.09), transparent 65%),
+    radial-gradient(ellipse 58% 45% at 88% 10%, rgba(217, 119, 6, 0.07), transparent 65%),
+    radial-gradient(circle at 1px 1px, rgba(28, 25, 23, 0.026) 1px, transparent 0);
+  background-size: auto, auto, 24px 24px;
+}
+
+@keyframes grid-drift {
+  0% {
+    background-position: 0px 0px;
+  }
+  100% {
+    background-position: 48px 48px;
+  }
+}
+
+@keyframes pulse-sweep {
+  0%, 100% {
+    transform: translateY(-10vh);
+    opacity: 0.18;
+  }
+  50% {
+    transform: translateY(72vh);
+    opacity: 0.45;
+  }
+}
+
+@keyframes orb-drift-a {
+  0%, 100% {
+    transform: translate3d(0px, 0px, 0px) scale(1);
+  }
+  50% {
+    transform: translate3d(56px, 34px, 0px) scale(1.12);
+  }
+}
+
+@keyframes orb-drift-b {
+  0%, 100% {
+    transform: translate3d(0px, 0px, 0px) scale(1.04);
+  }
+  50% {
+    transform: translate3d(-52px, -38px, 0px) scale(0.92);
+  }
+}
+
+@keyframes token-rise {
+  0% {
+    transform: translate3d(0px, 18vh, 0px);
+    opacity: 0;
+  }
+  15% {
+    opacity: 0.24;
+  }
+  85% {
+    opacity: 0.22;
+  }
+  100% {
+    transform: translate3d(0px, -110vh, 0px);
+    opacity: 0;
+  }
+}
+
+@keyframes quest-ring-pulse {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.35), 0 8px 28px -12px rgba(16, 185, 129, 0.35);
+  }
+  50% {
+    box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.14), 0 8px 34px -8px rgba(16, 185, 129, 0.55);
+  }
+}
+
+.animate-grid-drift {
+  animation: grid-drift 20s linear infinite;
+}
+
+.animate-orb-a {
+  animation: orb-drift-a 16s ease-in-out infinite;
+}
+
+.animate-orb-b {
+  animation: orb-drift-b 20s ease-in-out infinite;
+}
+
+.animate-token-rise {
+  animation: token-rise var(--rise-duration, 24s) linear infinite;
+  animation-delay: var(--rise-delay, 0s);
+}
+
+.quest-next-pulse {
+  animation: quest-ring-pulse 2.4s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-grid-drift,
+  .neon-pulse-scanline,
+  .animate-orb-a,
+  .animate-orb-b,
+  .animate-token-rise,
+  .quest-next-pulse {
+    animation: none;
+  }
+}
+
+@media print {
+  .no-print {
+    display: none !important;
+  }
+  .print-only-sheet {
+    position: static !important;
+    width: 100% !important;
+    max-width: none !important;
+    box-shadow: none !important;
+    border: none !important;
+    background: #ffffff !important;
+    color: #0f172a !important;
+  }
+}

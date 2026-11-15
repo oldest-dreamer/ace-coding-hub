@@ -1,0 +1,8 @@
+{
+  "name": "ArgonCode Academy",
+  "description": "Bilingual (English & Bangla) 8-language coding academy, 120-chapter curriculum, multi-language cloud compiler, and competitive programming & FAANG interview arena.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
