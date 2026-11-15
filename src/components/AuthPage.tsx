@@ -29,7 +29,6 @@ interface AuthPageProps {
     username: string;
     targetGoal: TargetGoal;
   }) => Promise<{ ok: true; needsEmailConfirmation: boolean } | { ok: false; error: string }>;
-  onSignInWithGoogle: () => Promise<{ ok: true } | { ok: false; error: string }>;
   onContinueAsGuest: () => void;
   canCloseModal?: boolean;
   onClose?: () => void;
@@ -45,7 +44,6 @@ const TARGET_GOALS: TargetGoal[] = [
 export function AuthPage({
   onSignInWithEmail,
   onSignUpWithEmail,
-  onSignInWithGoogle,
   onContinueAsGuest,
   canCloseModal = false,
   onClose,
@@ -56,7 +54,6 @@ export function AuthPage({
   const [username, setUsername] = useState('');
   const [targetGoal, setTargetGoal] = useState<TargetGoal>('Competitive Programming');
   const [submitting, setSubmitting] = useState(false);
-  const [googleLoading, setGoogleLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const [infoMsg, setInfoMsg] = useState<string | null>(null);
 
@@ -105,17 +102,6 @@ export function AuthPage({
     setSubmitting(true);
     const res = await onSignInWithEmail(trimmedEmail, password);
     setSubmitting(false);
-    if (!res.ok) {
-      setErrorMsg(res.error);
-    }
-  }
-
-  async function handleGoogleAuth() {
-    setErrorMsg(null);
-    setInfoMsg(null);
-    setGoogleLoading(true);
-    const res = await onSignInWithGoogle();
-    setGoogleLoading(false);
     if (!res.ok) {
       setErrorMsg(res.error);
     }
@@ -449,39 +435,18 @@ export function AuthPage({
 
               <div className="my-5 flex items-center gap-3 text-xs text-slate-500">
                 <span className="h-px flex-1 bg-white/[0.08]" aria-hidden="true" />
-                <span>or continue with</span>
+                <span>or</span>
                 <span className="h-px flex-1 bg-white/[0.08]" aria-hidden="true" />
               </div>
 
-              <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-2">
-                <button
-                  type="button"
-                  onClick={handleGoogleAuth}
-                  disabled={googleLoading || !isSupabaseConfigured}
-                  className="flex items-center justify-center gap-2 rounded-xl border border-white/[0.14] bg-white/[0.04] px-4 py-2.5 text-xs font-semibold text-white transition-colors hover:bg-white/[0.08] disabled:cursor-not-allowed disabled:opacity-50 whitespace-nowrap"
-                >
-                  {googleLoading ? (
-                    <Loader2 className="h-4 w-4 animate-spin" aria-hidden="true" />
-                  ) : (
-                    <svg className="h-4 w-4" viewBox="0 0 24 24" aria-hidden="true">
-                      <path
-                        fill="#EA4335"
-                        d="M12 10.2v3.9h5.4c-.2 1.3-1.5 3.9-5.4 3.9-3.2 0-5.9-2.7-5.9-6s2.7-6 5.9-6c1.9 0 3.1.8 3.8 1.5l2.6-2.5C16.8 3.5 14.6 2.5 12 2.5 6.8 2.5 2.5 6.8 2.5 12s4.3 9.5 9.5 9.5c5.5 0 9.1-3.9 9.1-9.3 0-.6-.1-1.1-.2-1.6H12z"
-                      />
-                    </svg>
-                  )}
-                  <span>Continue with Google</span>
-                </button>
-
-                <button
-                  type="button"
-                  onClick={onContinueAsGuest}
-                  className="flex items-center justify-center gap-2 rounded-xl border border-[#C8EE72]/35 bg-[#C8EE72]/[0.08] px-4 py-2.5 text-xs font-semibold text-[#C8EE72] transition-colors hover:bg-[#C8EE72]/[0.14] whitespace-nowrap"
-                >
-                  <span>Continue as Guest</span>
-                  <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
-                </button>
-              </div>
+              <button
+                type="button"
+                onClick={onContinueAsGuest}
+                className="flex w-full items-center justify-center gap-2 rounded-xl border border-[#C8EE72]/35 bg-[#C8EE72]/[0.08] px-4 py-2.5 text-xs font-semibold text-[#C8EE72] transition-colors hover:bg-[#C8EE72]/[0.14] whitespace-nowrap"
+              >
+                <span>Continue as Guest</span>
+                <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
+              </button>
             </div>
 
             <div className="mt-6 border-t border-white/[0.08] pt-4 text-[11px] text-slate-400">

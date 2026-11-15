@@ -684,7 +684,6 @@ export default function App() {
         <AuthPage
           onSignInWithEmail={cloud.signInWithEmail}
           onSignUpWithEmail={cloud.signUpWithEmail}
-          onSignInWithGoogle={cloud.signInWithGoogle}
           onContinueAsGuest={handleDismissGuestGate}
           canCloseModal={guestGateDismissed || authModalOpen}
           onClose={handleDismissGuestGate}
